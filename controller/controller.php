@@ -169,8 +169,11 @@ class MVC{
 		$informacion = Crud::vistaXTablaModel("alumnos");
 		if(!empty($informacion)){
 				foreach ($informacion as $row => $item) {
-          if($item['tutor'] == $numero_maestro)
-            echo "<option value='".$item['matricula']."'>".$item['matricula']. " | ". $item['nombre']."</option>";
+          if($item['tutor'] == $numero_maestro){
+            $carrera_alumno = Crud::getRegModel($item['carrera'], "carreras");
+            echo "<option value='".$item['matricula']."'>".$item['matricula']. " | ". $item['nombre'] . " | ".$carrera_alumno['nombre'] . "</option>";
+          }
+            
 				}
 			}else{
         echo "<center><h3>No tiene asignado ningun alumno</h3></center>";
@@ -192,7 +195,7 @@ class MVC{
 			if($registro == "success"){
 				header("Location: index.php?action=alumnos");
 			}else{
-				echo "<script>alert('Error al registrar')</script>";
+				echo "<script>alert('Error al registrar... verifica que la matricula ingresada no exista en un registro de un alumno en le base de datos')</script>";
 			}
 		}
 	}
@@ -228,7 +231,7 @@ class MVC{
 			if($registro == "success"){
 				header("Location: index.php?action=sesion_tutoria");
 			}else{
-				echo "<script>alert('Error al registrar...')</script>";
+				echo "<script>alert('Error al registrar la sesion de tutoria')</script>";
 			}
 		}
 	}

@@ -21,8 +21,9 @@
      <form method="post" action="">
     <div class="row">
       <div>
-        <h3>Login</h3>
-        <p>Ingrese los datos que se piden a continuacion</p>
+        <hr>
+        <h3>Sistema de Control de Tutorias UPV</h3>
+        <p>Inicie sesion para continuar</p>
         <div class="section-container tabs" data-section>
           <section class="section">
             <div class="content" data-slug="panel1">
