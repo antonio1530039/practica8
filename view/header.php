@@ -2,6 +2,7 @@
     <link rel="stylesheet" href="view/assets/css/foundation.css" />
     <script src="view/assets/js/vendor/modernizr.js"></script>
 <div class="row">
+    <h1><img src="view/assets/img/upv_logo.png" width="100" height="100" style="float:left"/></h1>
       <div >
         <ul class="right button-group">
           <li><a href="index.php" class="button tiny">Inicio</a></li>

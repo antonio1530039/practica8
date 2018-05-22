@@ -22,11 +22,12 @@
     <div class="row">
       <div>
         <hr>
+        <center><h1><img src="assets/img/upv_logo.png" width="200" height="200"/></h1></center>
         <h3>Sistema de Control de Tutorias UPV</h3>
         <p>Inicie sesion para continuar</p>
         <div class="section-container tabs" data-section>
           <section class="section">
-            <div class="content" data-slug="panel1">
+            <div class="content">
               <div class="row">
                 <p>
                   <input type="text" name="correo" required="" placeholder="Email" required="">
