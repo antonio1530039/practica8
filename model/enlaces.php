@@ -15,6 +15,11 @@ class Enlaces{
 			$module = "view/maestros/$enlace.php";
 		}else if($enlace == "registro_tutoria" || $enlace == "sesion_tutoria"){
       $module = "view/tutorias/$enlace.php";
+    }else if($enlace == "reportes"){
+      $module = "view/reportes/$enlace.php";
+    }
+    else if($enlace == "login"){
+      $module = "view/login.php";
     }
     else if($enlace == "registro_carrera" || $enlace == "editar_carrera"){
 			$module = "view/carreras/$enlace.php";

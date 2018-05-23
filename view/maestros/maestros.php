@@ -10,8 +10,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestion de maestros</title>
-    <link rel="stylesheet" href="./css/foundation.css" />
-    <script src="./js/vendor/modernizr.js"></script>
   </head>
   <body>
 
@@ -28,11 +26,12 @@
               <td>Nombre</td>
               <td>Carrera</td>
               <td>Correo</td>
+              <td>Tipo de usuario</td>
               <td></td>
               <td></td>
             </thead>
             <tbody>
-              <?php $controller_maestros->getMaestrosController();  ?>
+              <?php $controller_maestros->getMaestrosController("");  ?>
             </tbody>
           </table>
           
@@ -44,6 +43,5 @@
           if(!x)
             event.preventDefault();
         }
-
       </script>
     </div>

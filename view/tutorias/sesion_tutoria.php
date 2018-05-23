@@ -35,7 +35,7 @@
             </thead>
             <tbody>
               <?php 
-                $controller_maestros->getTutoriasMaestros();  
+                $controller_maestros->getTutoriasMaestros("");  
               ?>
             </tbody>
           </table>

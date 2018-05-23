@@ -50,6 +50,10 @@
               <label>Password</label>
               <input type="text" name="password" placeholder="Password" required="">
             </p>
+            <select name="tipo">
+              <option value="1">Superadmin</option>
+              <option value="0">Maestro</option>
+          </select>
                <input type="submit" name="btn_agregar" value="Registrar" class="button tiny success" style="float: right;">
             
             <!--content !-->

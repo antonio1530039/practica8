@@ -32,7 +32,7 @@
               <td></td>
             </thead>
             <tbody>
-              <?php $controller_alumnos->getAlumnosController();  ?>
+              <?php $controller_alumnos->getAlumnosController("");  ?>
             </tbody>
           </table>
           

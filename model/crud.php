@@ -49,12 +49,13 @@ class Crud extends Conexion{
 	}
   
 	public function registroMaestroModel($data){
-		$stmt = Conexion::conectar()->prepare("INSERT INTO maestros(numero_empleado, nombre, carrera, email, password) VALUES(:numero, :nombre, :carrera, :correo, :password)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO maestros(numero_empleado, nombre, carrera, email, password, superadmin) VALUES(:numero, :nombre, :carrera, :correo, :password, :tipo)");
 		$stmt->bindParam(":numero", $data['numero_empleado']);
 		$stmt->bindParam(":nombre", $data['nombre']);
 		$stmt->bindParam(":carrera", $data['carrera']);
 		$stmt->bindParam(":correo", $data['correo']);
 		$stmt->bindParam(":password", $data['password']);
+    $stmt->bindParam(":tipo", $data['superadmin']);
 		if($stmt->execute())
 			return "success";
 		else
@@ -114,11 +115,12 @@ class Crud extends Conexion{
 	}
 
 	public function actualizarMaestroModel($data, $id){
-		$stmt = Conexion::conectar()->prepare("UPDATE maestros SET nombre = :nombre, carrera = :carrera, email = :correo, password = :password WHERE numero_empleado = '$id'");
+		$stmt = Conexion::conectar()->prepare("UPDATE maestros SET nombre = :nombre, carrera = :carrera, email = :correo, password = :password, superadmin = :tipo WHERE numero_empleado = '$id'");
 		$stmt->bindParam(":nombre", $data['nombre']);
 		$stmt->bindParam(":carrera", $data['carrera']);
 		$stmt->bindParam(":correo", $data['correo']);
 		$stmt->bindParam(":password", $data['password']);
+    $stmt->bindParam(":tipo", $data['superadmin']);
 		if($stmt->execute())
 			return "success";
 		else

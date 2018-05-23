@@ -53,7 +53,7 @@
           </p>
           <p>
             <label>Hora</label>
-             <input type="text" name="hora" placeholder="Hora" required="">
+             <input type="time" name="hora" placeholder="Hora" required="">
           </p>
           <p>
             <label>Tema(s) de tutoria</label>

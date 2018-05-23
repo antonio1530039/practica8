@@ -1,6 +1,6 @@
 <?php
-  require_once('../model/crud.php');
-  require_once "../controller/controller.php";
+  require_once('model/crud.php');
+  require_once "controller/controller.php";
   $ingresarUsuario = new MVC();
   $ingresarUsuario->ingresoUsuarioController();
 ?>
@@ -11,8 +11,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="assets/css/foundation.css" />
-    <script src="assets/js/vendor/modernizr.js"></script>
+   <!-- <link rel="stylesheet" href="view/assets/css/foundation.css" />
+    <script src="view/assets/js/vendor/modernizr.js"></script> -->
   </head>
   <body>
     <?php
@@ -21,8 +21,8 @@
      <form method="post" action="">
     <div class="row">
       <div>
-        <hr>
-        <center><h1><img src="assets/img/upv_logo.png" width="200" height="200"/></h1></center>
+
+        <center><h1><img src="view/assets/img/upv_logo.png" width="200" height="200"/></h1></center>
         <h3>Sistema de Control de Tutorias UPV</h3>
         <p>Inicie sesion para continuar</p>
         <div class="section-container tabs" data-section>

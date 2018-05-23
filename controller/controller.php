@@ -1,33 +1,67 @@
 <?php
 
 class MVC{
+  //metodo que muestra la plantilla base
 	public function showTemplate(){
 		include "view/template.php";
 	}
 
+  //metodo encargado de capturar la variable action mediante el metodo get y hace la peticion al modelo para que redireccione a las vistas correspondientes
 	public function enlacePaginasController(){
 		if(isset($_GET['action'])){
 			$enlace = $_GET['action'];
 		}else{
 			$enlace = 'index';
 		}
+
 		//peticion al modelo
 		$peticion = Enlaces::enlacesPaginasModel($enlace);
-
+    //mostrar peticion
 		include $peticion;
 	}
 
+    //metodo que verifica si usuario ha iniciado sesion, si no es asi, redireccion al login
 	public function verificarLoginController(){
 		session_start();
 		if($_SESSION){
 			if(!$_SESSION['login'])
-				header("view/login.php");
+				//header("view/login.php");
+        header("Location: index.php?action=login");
 		}else{
-			header("Location: view/login.php");
+			header("Location: index.php?action=login");
 		}
-
 	}
-
+  
+  //metodo especifico para el archivo header.php o navegacion, el cual verifica si el usuario esta logueado, entonces muestra el menu
+  public function showNav(){
+    session_start();
+    if($_SESSION){
+			if($_SESSION['login'])
+				//verificar tipo de usuario: superadmin o empleado y mostrar el nav correspondiente
+        if($_SESSION["maestro_info"]["superadmin"]==1){//superadmin
+          echo "
+          <h1><img src='view/assets/img/upv_logo.png' width='100' height='100' style='float:left'/></h1>
+          <ul class='right button-group'>
+          <li><a href='index.php' class='button tiny'>Inicio</a></li>
+          <li><a href='index.php?action=alumnos' class='button tiny'>Gestion de Alumnos</a></li>
+          <li><a href='index.php?action=maestros' class='button tiny'>Gestion de Maestros</a></li>
+          <li><a href='index.php?action=carreras' class='button tiny'>Gestion de Carreras</a></li>
+          <li><a href='index.php?action=sesion_tutoria' class='button tiny'>Sesion de Tutoria</a></li>
+          <li><a href='index.php?action=reportes' class='button tiny'>Reportes</a></li>
+          <li><a href='index.php?action=logout' class='button tiny' style='background-color:red'>Log out</a></li>
+        </ul>";
+        }else{ //maestro (reducir opciones)
+          echo "
+          <h1><img src='view/assets/img/upv_logo.png' width='100' height='100' style='float:left'/></h1>
+          <ul class='right button-group'>
+          <li><a href='index.php' class='button tiny'>Inicio</a></li>
+          <li><a href='index.php?action=sesion_tutoria' class='button tiny'>Sesion de Tutoria</a></li>
+          <li><a href='index.php?action=logout' class='button tiny' style='background-color:red'>Log out</a></li>
+        </ul>";
+        }
+		}
+  }
+  
 	public function ingresoUsuarioController(){
 		if(isset($_POST['correo']) && isset($_POST['password'])){
 			$resultado = Crud::ingresoUsuarioModel($_POST['correo'], $_POST['password']);
@@ -36,7 +70,7 @@ class MVC{
 				session_start();
 				$_SESSION['login']=true;
 				$_SESSION['maestro_info']= $resultado;
-				header("Location: ../index.php");
+				header("Location: index.php");
 			}else{
 				echo "<script>alert('Email o password incorrectos');</script>";
 			}
@@ -50,7 +84,7 @@ class MVC{
 	}
 
 
-	public function getAlumnosController(){
+	public function getAlumnosController($flag){
 		$informacion = Crud::vistaXTablaModel("alumnos");
 		if(!empty($informacion)){
 			foreach ($informacion as $row => $item) {
@@ -61,15 +95,17 @@ class MVC{
 				echo "<td>".$item['nombre']."</td>";
 				echo "<td>".$carrera['nombre']."</td>";
 				echo "<td>".$tutor['nombre']."</td>";
-				echo "<td>"."<a href=index.php?action=editar_alumno&matricula=".$item['matricula']." class='button radius tiny secondary'>Ver detalles</a></td>";
-				echo "<td>"."<a href=index.php?action=borrar&tipo=alumnos&matricula=".$item['matricula']." class='button radius tiny warning' onclick='confirmar();'>Borrar</a></td>";
-
+        if(empty($flag)){
+          echo "<td>"."<a href=index.php?action=editar_alumno&matricula=".$item['matricula']." class='button radius tiny secondary'>Ver detalles</a></td>";
+				  echo "<td>"."<a href=index.php?action=borrar&tipo=alumnos&matricula=".$item['matricula']." class='button radius tiny warning' onclick='confirmar();'>Borrar</a></td>";
+        }
+				
 			}
 		}
 		
 	}
 
-	public function getMaestrosController(){
+	public function getMaestrosController($flag){
 		$informacion = Crud::vistaXTablaModel("maestros");
 		if(!empty($informacion)){
 			foreach ($informacion as $row => $item) {
@@ -79,18 +115,36 @@ class MVC{
 				echo "<td>".$item['nombre']."</td>";
 				echo "<td>".$carrera['nombre']."</td>";
 				echo "<td>".$item['email']."</td>";
-				echo "<td>"."<a href=index.php?action=editar_maestro&numero_empleado=".$item['numero_empleado']." class='button radius tiny secondary'>Ver detalles</a></td>";
+        if($item["superadmin"]==1)
+          echo "<td>Superadmin</td>";
+        else
+          echo "<td>Maestro</td>";
+				if(empty($flag)){
+           echo "<td>"."<a href=index.php?action=editar_maestro&numero_empleado=".$item['numero_empleado']." class='button radius tiny secondary'>Ver detalles</a></td>";
 				echo "<td>"."<a href=index.php?action=borrar&tipo=maestros&numero_empleado=".$item['numero_empleado']." class='button radius tiny warning' onclick='confirmar();'>Borrar</a></td>";
-
+        }
+       
 			}
 		}
 	}
   
-  public function getTutoriasMaestros(){
+  public function getTutoriasMaestros($flag){
 		$informacion = Crud::vistaXTablaModel("sesion_tutoria");
 		if(!empty($informacion)){
 			foreach ($informacion as $row => $item) {
-        if($item['maestro'] == $_SESSION['maestro_info']['numero_empleado']){
+        if(!empty($flag)){
+          $alumno = Crud::getRegModel($item['alumno'],"alumnos");
+          $maestro = Crud::getRegModel($item['maestro'],"maestros");
+          echo "<tr>";
+          echo "<td>".$item['id']."</td>";
+          echo "<td>".$alumno['nombre']."</td>";
+          echo "<td>".$maestro['nombre']."</td>";
+          echo "<td>".$item['fecha']."</td>";
+          echo "<td>".$item['hora']."</td>";
+          echo "<td>".$item['tipo_tutoria']."</td>";
+            echo "<td>".$item['tutoria_informacion']."</td>";
+         echo "</tr>";
+        }else if($item['maestro'] == $_SESSION['maestro_info']['numero_empleado']){
           $alumno = Crud::getRegModel($item['alumno'],"alumnos");
         $maestro = Crud::getRegModel($item['maestro'],"maestros");
 				echo "<tr>";
@@ -207,12 +261,13 @@ class MVC{
 						'carrera'=> $_POST['carrera'],
 						'correo'=> $_POST['correo'],
 						'password'=> $_POST['password'],
+            'superadmin'=> $_POST['tipo']
 					);
 			$registro = Crud::registroMaestroModel($data);
 			if($registro == "success"){
 				header("Location: index.php?action=maestros");
 			}else{
-				echo "<script>alert('Error al registrar... Verifica que el numero de empleado que ingresaste no pertenezca a otro usuario')</script>";
+				echo "<script>alert('Error al registrar... Verifica que el numero de empleado que ingresaste no pertenezca a otro usuario o la conexion con la base de datos')</script>";
 			}
 		}
 	}
@@ -308,6 +363,16 @@ class MVC{
               <label>Password</label>
               <input type='text' name='password' placeholder='Password' required='' value='".$peticion['password']."'>
             </p>";
+            echo "<select name='tipo'>";
+            if($peticion["superadmin"] == 1){
+              echo "<option value='1'>Superadmin</option>
+              <option value='0'>Maestro</option>";
+            }else{
+              echo "<option value='0'>Maestro</option>
+              <option value='1'>Superadmin</option>";
+            }
+            echo "</select>";
+             
            
 		}else{
 			header("Location: index.php?action=maestros");
@@ -355,7 +420,8 @@ class MVC{
 				"nombre"=>$_POST['nombre'],
 				"carrera"=>$_POST['carrera'],
 				"correo"=>$_POST['correo'],
-				"password"=>$_POST['password']
+				"password"=>$_POST['password'],
+        "superadmin"=>$_POST['tipo']
 			);
 
 			//Model
@@ -396,6 +462,54 @@ class MVC{
 		}
 	}
 
+  public function verReporteController(){
+    if($_POST["btn_filtrar"]){
+          if($_POST["query"]=="alumnos"){
+             echo "<table width=´100%´>
+            <thead>
+              <td>Matricula</td>
+              <td>Nombre</td>
+              <td>Carrera</td>
+              <td>Tutor</td>
+            </thead>
+            <tbody>";
+                   $this->getAlumnosController("qwerty");
+            echo "</tbody>
+          </table>";
+          }else if($_POST["query"]=="maestros"){
+            echo "<table width='100%'>
+            <thead>
+              <td>Numero Empleado</td>
+              <td>Nombre</td>
+              <td>Carrera</td>
+              <td>Correo</td>
+              <td>Tipo de usuario</td>
+            </thead>
+            <tbody>";
+                     $this->getMaestrosController("qwerty");
+            echo "</tbody>
+          </table>";
+            
+          }else if($_POST["query"] == "sesion_tutoria"){
+            echo "
+            <table width='100%'>
+            <thead>
+              <td>Id</td>
+              <td>Alumno</td>
+              <td>Tutor</td>
+              <td>Fecha</td>
+              <td>Hora</td>
+              <td>Tipo de tutoria</td>
+              <td>Tema</td>
+            </thead>
+            <tbody>";
+                            $this->getTutoriasMaestros("qwerty");
+            echo "</tbody>
+          </table>";
+
+          }
+        }
+  }
 
 
 
