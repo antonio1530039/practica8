@@ -26,9 +26,9 @@ class MVC{
 		if($_SESSION){
 			if(!$_SESSION['login'])
 				//header("view/login.php");
-        header("Location: index.php?action=login");
+        echo "<script>window.location='index.php?action=login';</script>";
 		}else{
-			header("Location: index.php?action=login");
+			echo "<script>window.location='index.php?action=login';</script>";
 		}
 	}
   
@@ -70,7 +70,7 @@ class MVC{
 				session_start();
 				$_SESSION['login']=true;
 				$_SESSION['maestro_info']= $resultado;
-				header("Location: index.php");
+				echo "<script>window.location='index.php';</script>";
 			}else{
 				echo "<script>alert('Email o password incorrectos');</script>";
 			}
@@ -99,6 +99,7 @@ class MVC{
           echo "<td>"."<a href=index.php?action=editar_alumno&matricula=".$item['matricula']." class='button radius tiny secondary'>Ver detalles</a></td>";
 				  echo "<td>"."<a href=index.php?action=borrar&tipo=alumnos&matricula=".$item['matricula']." class='button radius tiny warning' onclick='confirmar();'>Borrar</a></td>";
         }
+        echo "</tr>";
 				
 			}
 		}
@@ -123,6 +124,7 @@ class MVC{
            echo "<td>"."<a href=index.php?action=editar_maestro&numero_empleado=".$item['numero_empleado']." class='button radius tiny secondary'>Ver detalles</a></td>";
 				echo "<td>"."<a href=index.php?action=borrar&tipo=maestros&numero_empleado=".$item['numero_empleado']." class='button radius tiny warning' onclick='confirmar();'>Borrar</a></td>";
         }
+        echo "</tr>";
        
 			}
 		}
@@ -172,7 +174,7 @@ class MVC{
 				echo "<td>".$item['nombre']."</td>";
 				echo "<td>"."<a href=index.php?action=editar_carrera&id=".$item['id']." class='button radius tiny secondary'>Ver detalles</a></td>";
 				echo "<td>"."<a href=index.php?action=borrar&tipo=carreras&id=".$item['id']." class='button radius tiny warning' onclick='confirmar();'>Borrar</a></td>";
-
+        echo "</tr>";
 			}
 		}
 		
@@ -247,7 +249,7 @@ class MVC{
 					);
 			$registro = Crud::registroAlumnoModel($data);
 			if($registro == "success"){
-				header("Location: index.php?action=alumnos");
+				echo "<script>window.location='index.php?action=alumnos';</script>";
 			}else{
 				echo "<script>alert('Error al registrar... verifica que la matricula ingresada no exista en un registro de un alumno en le base de datos')</script>";
 			}
@@ -265,7 +267,7 @@ class MVC{
 					);
 			$registro = Crud::registroMaestroModel($data);
 			if($registro == "success"){
-				header("Location: index.php?action=maestros");
+				echo "<script>window.location='index.php?action=maestros';</script>";
 			}else{
 				echo "<script>alert('Error al registrar... Verifica que el numero de empleado que ingresaste no pertenezca a otro usuario o la conexion con la base de datos')</script>";
 			}
@@ -284,7 +286,7 @@ class MVC{
 					);
 			$registro = Crud::registroTutoriaModel($data);
 			if($registro == "success"){
-				header("Location: index.php?action=sesion_tutoria");
+				echo "<script>window.location='index.php?action=sesion_tutoria';</script>";
 			}else{
 				echo "<script>alert('Error al registrar la sesion de tutoria')</script>";
 			}
@@ -297,7 +299,7 @@ class MVC{
 					);
 			$registro = Crud::registroCarreraModel($data);
 			if($registro == "success"){
-				header("Location: index.php?action=carreras");
+				echo "<script>window.location='index.php?action=carreras';</script>";
 			}else{
 				echo "<script>alert('Error al registrar')</script>";
 			}
@@ -375,7 +377,7 @@ class MVC{
              
            
 		}else{
-			header("Location: index.php?action=maestros");
+			echo "<script>window.location='index.php?action=maestros';</script>";
 		}
 	}
 
@@ -392,7 +394,7 @@ class MVC{
               <input type='text' name='nombre' placeholder='Nombre' required='' value='".$peticion['nombre']."'>
             </p>";
 		}else{
-			header("Location: index.php?action=carreras");
+			echo "<script>window.location='index.php?action=carreras';</script>";
 		}
 	}
 
@@ -407,7 +409,8 @@ class MVC{
 			//Model
 			$peticion = Crud::actualizarAlumnoModel($data, $_POST['matricula']);
 			if($peticion == "success"){
-				header("Location: index.php?action=alumnos");
+       echo "<script>window.location='index.php?action=alumnos';</script>";
+        
 			}else{
 				echo "<script>alert('Error al actualizar')</script>";
 			}
@@ -424,11 +427,9 @@ class MVC{
         "superadmin"=>$_POST['tipo']
 			);
 
-			//Model
-			print_r($data);
 			$peticion = Crud::actualizarMaestroModel($data, $_POST['numero_empleado']);
 			if($peticion == "success"){
-				header("Location: index.php?action=maestros");
+				echo "<script>window.location='index.php?action=maestros';</script>";
 			}else{
 				echo "<script>alert('Error al actualizar')</script>";
 			}
@@ -441,11 +442,9 @@ class MVC{
 				"nombre"=>$_POST['nombre']
 			);
 
-			//Model
-			print_r($data);
 			$peticion = Crud::actualizarCarreraModel($data, $_POST['id']);
 			if($peticion == "success"){
-				header("Location: index.php?action=carreras");
+				echo "<script>window.location='index.php?action=carreras';</script>";
 			}else{
 				echo "<script>alert('Error al actualizar')</script>";
 			}
@@ -456,7 +455,7 @@ class MVC{
 	public function borrarController($id, $tabla){
 		$peticion = Crud::borrarXModel($id, $tabla);
 		if($peticion == "success"){
-			header("Location: index.php?action=$tabla");
+			echo "<script>window.location='index.php?action=".$tabla."';</script>";
 		}else{
 			echo "<script>alert('Error al borrar')</script>";
 		}

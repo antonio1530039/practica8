@@ -15,7 +15,12 @@
   </head>
   <body>
   <form method="post">
-    
+
+    <title>Reportes</title>
+    <link rel="stylesheet" href="./css/foundation.css" />
+    <script src="./js/vendor/modernizr.js"></script>
+  </head>
+  <body>
 
     <div class="row">
  
@@ -53,10 +58,4 @@
         </div>
       </div>
     </div>
-    <script>
-       $(document).ready(function() {
-            $('#tabla_reportes').DataTable();
-        } );
-     
-    </script>
-        </form>
+    
