@@ -36,8 +36,9 @@ class MVC{
   public function showNav(){
     session_start();
     if(isset($_SESSION)){
-			if($_SESSION['login'])
-				//verificar tipo de usuario: superadmin o empleado y mostrar el nav correspondiente
+      if(isset($_SESSION['login'])){
+          if($_SESSION['login']){
+            //verificar tipo de usuario: superadmin o empleado y mostrar el nav correspondiente
         if($_SESSION["maestro_info"]["superadmin"]==1){//superadmin
           echo "
           <h1><img src='view/assets/img/upv_logo.png' width='100' height='100' style='float:left'/></h1>
@@ -59,6 +60,8 @@ class MVC{
           <li><a href='index.php?action=logout' class='button tiny' style='background-color:red'>Log out</a></li>
         </ul>";
         }
+          }  
+      }
 		}
   }
   
