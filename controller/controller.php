@@ -22,7 +22,7 @@ class MVC{
 
     //metodo que verifica si usuario ha iniciado sesion, si no es asi, redireccion al login
 	public function verificarLoginController(){
-		session_start();
+		//session_start();
 		if($_SESSION){
 			if(!$_SESSION['login'])
 				//header("view/login.php");
@@ -35,7 +35,7 @@ class MVC{
   //metodo especifico para el archivo header.php o navegacion, el cual verifica si el usuario esta logueado, entonces muestra el menu
   public function showNav(){
     session_start();
-    if($_SESSION){
+    if(isset($_SESSION)){
 			if($_SESSION['login'])
 				//verificar tipo de usuario: superadmin o empleado y mostrar el nav correspondiente
         if($_SESSION["maestro_info"]["superadmin"]==1){//superadmin
@@ -67,7 +67,7 @@ class MVC{
 			$resultado = Crud::ingresoUsuarioModel($_POST['correo'], $_POST['password']);
 
 			if(!empty($resultado)){
-				session_start();
+				//session_start();
 				$_SESSION['login']=true;
 				$_SESSION['maestro_info']= $resultado;
 				echo "<script>window.location='index.php';</script>";
@@ -462,7 +462,7 @@ class MVC{
 	}
 
   public function verReporteController(){
-    if($_POST["btn_filtrar"]){
+    if(isset($_POST["btn_filtrar"])){
           if($_POST["query"]=="alumnos"){
              echo "<table width=´100%´>
             <thead>
