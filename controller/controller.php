@@ -42,15 +42,16 @@ class MVC{
         if($_SESSION["maestro_info"]["superadmin"]==1){//superadmin
           echo "
           <h1><img src='view/assets/img/upv_logo.png' width='100' height='100' style='float:left'/></h1>
-          <ul class='right button-group'>
+            <ul class='right button-group'>
           <li><a href='index.php' class='button tiny'>Inicio</a></li>
           <li><a href='index.php?action=alumnos' class='button tiny'>Gestion de Alumnos</a></li>
           <li><a href='index.php?action=maestros' class='button tiny'>Gestion de Maestros</a></li>
-          <li><a href='index.php?action=carreras' class='button tiny'>Gestion de Carreras</a></li>
-          <li><a href='index.php?action=sesion_tutoria' class='button tiny'>Sesion de Tutoria</a></li>
-          <li><a href='index.php?action=reportes' class='button tiny'>Reportes</a></li>
+          <li><a  href='index.php?action=carreras' class='button tiny'>Gestion de Carreras</a></li>
+          <li><a  href='index.php?action=sesion_tutoria' class='button tiny'>Sesion de Tutoria</a></li>
+          <li><a  href='index.php?action=reportes' class='button tiny'>Reportes</a></li>
           <li><a href='index.php?action=logout' class='button tiny' style='background-color:red'>Log out</a></li>
-        </ul>";
+        </ul>
+";
         }else{ //maestro (reducir opciones)
           echo "
           <h1><img src='view/assets/img/upv_logo.png' width='100' height='100' style='float:left'/></h1>
@@ -467,7 +468,7 @@ class MVC{
   public function verReporteController(){
     if(isset($_POST["btn_filtrar"])){
           if($_POST["query"]=="alumnos"){
-             echo "<table width=´100%´>
+             echo "<table id='dt' class='display' style='width:100%'>
             <thead>
               <td>Matricula</td>
               <td>Nombre</td>
@@ -479,7 +480,7 @@ class MVC{
             echo "</tbody>
           </table>";
           }else if($_POST["query"]=="maestros"){
-            echo "<table width='100%'>
+            echo "<table id='dt' class='display' style='width:100%'>
             <thead>
               <td>Numero Empleado</td>
               <td>Nombre</td>
@@ -494,7 +495,7 @@ class MVC{
             
           }else if($_POST["query"] == "sesion_tutoria"){
             echo "
-            <table width='100%'>
+            <table id='dt' class='display' style='width:100%'>
             <thead>
               <td>Id</td>
               <td>Alumno</td>

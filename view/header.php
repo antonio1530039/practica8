@@ -1,6 +1,7 @@
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="view/assets/css/foundation.css" />
     <script src="view/assets/js/vendor/modernizr.js"></script>
+
 
     <!-- DataTables 
         <link href="view/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>

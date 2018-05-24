@@ -8,19 +8,18 @@
 <html class="no-js" lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestion de maestros</title>
   </head>
   <body>
 
     <div class="row">
- 
+    
       <div>
         <h3>Maestros</h3>
         <input type="button" name="btn_back" value="Registrar maestro" onclick="window.location = 'index.php?action=registro_maestro'" class="button tiny success" style="float: right;">
       </div>
         <div>
-          <table width="100%">
+          <table style="width:100%">
             <thead>
               <td>Numero Empleado</td>
               <td>Nombre</td>
