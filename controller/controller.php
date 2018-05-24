@@ -23,10 +23,14 @@ class MVC{
     //metodo que verifica si usuario ha iniciado sesion, si no es asi, redireccion al login
 	public function verificarLoginController(){
 		//session_start();
-		if($_SESSION){
-			if(!$_SESSION['login'])
-				//header("view/login.php");
-        echo "<script>window.location='index.php?action=login';</script>";
+		if(isset($_SESSION)){
+			if(isset($_SESSION['login'])){
+            if(!$_SESSION['login'])
+          //header("view/login.php");
+          echo "<script>window.location='index.php?action=login';</script>";  
+      }else{
+        echo "<script>window.location='index.php?action=login';</script>"; 
+      }
 		}else{
 			echo "<script>window.location='index.php?action=login';</script>";
 		}
