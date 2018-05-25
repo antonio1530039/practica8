@@ -34,6 +34,7 @@
               <td>Tipo de tutoria</td>
               <td>Tema</td>
               <td></td>
+              <td></td>
             </thead>
             <tbody>
               <?php 

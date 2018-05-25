@@ -327,9 +327,7 @@ class MVC{
           //registrar alumno en la bd
           Crud::registroAlumnoTutoria($alumno_data);
         }
-        //redireccionar al tutorias
-        echo "<script>window.location='index.php?action=sesion_tutoria';</script>";
-			
+        echo "<script>window.location.assign('index.php?action=sesion_tutoria');</script>";
 			}else{
 				echo "<script>alert('Error al registrar la sesion de tutoria')</script>";
 			}
@@ -446,21 +444,53 @@ class MVC{
 		$id = (isset($_GET['id'])) ? $_GET['id'] : "";
 		$peticion = Crud::vistaXTablaModel('tutoria_alumnos');
     $tutoria = Crud::getRegModel($id, 'sesion_tutoria');
-    echo "<center><h3>Tutoria de tipo: ".$tutoria["tipo_tutoria"]."</h3></center";
+    echo "
+    <table width='100%'>
+      <thead>
+        <tr>
+          <td>Id de tutoria</td>
+          
+          <td>Tipo</td>
+          
+          <td>Tema(as)</td>
+        </tr>
+      </thead>
+      
+      <tbody>
+      <td>".$tutoria['id']."</td>
+      <td>".$tutoria['tipo_tutoria']."</td>
+      <td>".$tutoria['tutoria_informacion']."</td>
+      
+      </tbody>
+    
+    </table>
+    
+    ";
 		if(!empty($peticion)){
-      foreach($peticion as $key => $item){
-        if($item["tutoria"]==$id){
+      echo "
+    <table width='100%'>
+      <thead>
+        <tr>
+          <td>Nombre del alumno</td>
+          
+          <td>Carrera</td>
+          
+        </tr>
+      </thead>";
+      foreach($peticion as $row => $item){
+        if($item["tutoria"]==$tutoria["id"]){
           $alumno = Crud::getRegModel($item["matricula"], "alumnos");
+          $carrera = Crud::getRegModel($alumno["carrera"], "carreras");
           echo "<tr>";
-          echo "<td>".$tutoria['id']."</td>";
           echo "<td>".$alumno['nombre']."</td>";
+          echo "<td>".$carrera['nombre']."</td>";
           echo "</tr>";
         }
       }
       
-
+    echo "</table>";
 		}else{
-			//echo "<script>window.location='index.php?action=sesion_tutoria';</script>";
+			echo "<script>window.location='index.php?action=sesion_tutoria';</script>";
 		}
 	}
 

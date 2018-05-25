@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Detalle de Sesión de Tutorias</title>
+    <title>Detalle de Sesión de Tutoria</title>
     <link rel="stylesheet" href="./css/foundation.css" />
     <script src="./js/vendor/modernizr.js"></script>
   </head>
@@ -24,20 +24,12 @@
         <hr>
       </div>
         <div>
-            <table>
-              <thead>
-                <tr>
-                    <td>Nombre de alumno: </td>
-                    <td>Carrera: </td>
-                </tr>
-              </thead>
-              <tbod>
+            
               <?php
                   $controller_tutorias->getTutoriaController();
 
               ?>
-              </tbod>
-          </table>
+              
             
             <!--content !-->
         </div>

@@ -98,7 +98,7 @@ class Crud extends Conexion{
 		}else if($table == "carreras"){
 			$idName = "id";
 		}else if($table == "sesion_tutoria"){
-      $idName = "id"
+      $idName = "id";
     }else if($table == "tutoria_alumnos"){
       $idName = "id";
     }
