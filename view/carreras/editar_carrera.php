@@ -21,6 +21,9 @@
     <div class="row">
       <div>
         <h3>Modificacion de carrera</h3>
+        <p>
+          Realice los cambios correspondientes y presione Guardar
+        </p>
         <input type="button" name="btn_back" value="Regresar" onclick="window.location = 'index.php?action=carreras'" class="button tiny success" style="float: right;">
         <hr>
       </div>

@@ -20,6 +20,9 @@
     <div class="row">
       <div>
         <h3>Registro de alumno</h3>
+        <p>
+          Por favor, ingrese la información que se pide a continuación
+        </p>
         <input type="button" name="btn_back" value="Regresar" onclick="window.location = 'index.php?action=alumnos'" class="button tiny success" style="float: right;">
         <hr>
       </div>

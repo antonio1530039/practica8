@@ -18,7 +18,7 @@
     <div class="row">
  
       <div>
-        <h3>Carreras</h3>
+        <h3>Gestión de Carreras</h3>
         <input type="button" name="btn_back" value="Registrar carrera" onclick="window.location = 'index.php?action=registro_carrera'" class="button tiny success" style="float: right;">
       </div>
         <div>

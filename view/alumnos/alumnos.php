@@ -17,7 +17,7 @@
     <div class="row">
  
       <div>
-        <h3>Alumnos</h3>
+        <h3>Gestión de Alumnos</h3>
         <input type="button" name="btn_back" value="Registrar alumno" onclick="window.location = 'index.php?action=registro_alumno'" class="button tiny success" style="float: right;">
       </div>
         <div>

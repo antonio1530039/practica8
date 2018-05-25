@@ -15,7 +15,7 @@
     <div class="row">
     
       <div>
-        <h3>Maestros</h3>
+        <h3>Gestión de Maestros</h3>
         <input type="button" name="btn_back" value="Registrar maestro" onclick="window.location = 'index.php?action=registro_maestro'" class="button tiny success" style="float: right;">
       </div>
         <div>

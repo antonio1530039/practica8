@@ -34,8 +34,7 @@ class Crud extends Conexion{
 		$stmt->close();
 	}
   public function registroTutoriaModel($data){
-		$stmt = Conexion::conectar()->prepare("INSERT INTO sesion_tutoria(alumno, maestro, fecha, hora, tipo_tutoria, tutoria_informacion) VALUES(:alumno, :maestro, :fecha, :hora, :tipo_tutoria, :tutoria_informacion)");
-		$stmt->bindParam(":alumno", $data['alumno']);
+		$stmt = Conexion::conectar()->prepare("INSERT INTO sesion_tutoria(maestro, fecha, hora, tipo_tutoria, tutoria_informacion) VALUES(:maestro, :fecha, :hora, :tipo_tutoria, :tutoria_informacion)");
 		$stmt->bindParam(":maestro", $data['maestro']);
 		$stmt->bindParam(":fecha", $data['fecha']);
 		$stmt->bindParam(":hora", $data['hora']);
@@ -43,6 +42,24 @@ class Crud extends Conexion{
     $stmt->bindParam(":tutoria_informacion", $data['info']);
 		if($stmt->execute())
 			return "success";
+		else
+			return "error";
+		$stmt->close();
+	}
+  //Funcion que inserta un alumno en la tabla tutoria_alumnos
+   public function registroAlumnoTutoria($data){
+		$stmt = Conexion::conectar()->prepare("INSERT INTO tutoria_alumnos(tutoria, matricula) VALUES(:id_tutoria, :matricula_alumno)");
+		$stmt->bindParam(":id_tutoria", $data['id_tutoria']);
+		$stmt->bindParam(":matricula_alumno", $data['matricula_alumno']);
+		$stmt->execute();
+		$stmt->close();
+	}
+  
+  //Funcion que retorna la ultima tutoria insertada en la bd
+  public function returnLastTutoria(){
+		$stmt = Conexion::conectar()->prepare("SELECT MAX(id) FROM sesion_tutoria");
+		if($stmt->execute())
+			return $stmt->fetch();
 		else
 			return "error";
 		$stmt->close();
@@ -80,7 +97,11 @@ class Crud extends Conexion{
 			$idName = "numero_empleado";
 		}else if($table == "carreras"){
 			$idName = "id";
-		}
+		}else if($table == "sesion_tutoria"){
+      $idName = "id"
+    }else if($table == "tutoria_alumnos"){
+      $idName = "id";
+    }
 		$stmt = Conexion::conectar()->prepare("SELECT * FROM $table WHERE $idName = :id and deleted = 0");
 		$stmt->bindParam(":id",$id);
 		$stmt->execute();

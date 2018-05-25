@@ -18,14 +18,16 @@
     <div class="row">
  
       <div>
-        <h3>Tutorias de profesor <?php echo $_SESSION['maestro_info']['nombre'] ?></h3>
+        <h3>Listado de mis tutorias</h3>
+        <p>
+          Profesor: <?php echo $_SESSION['maestro_info']['nombre'] ?> 
+        </p>
         <input type="button" name="btn_back" value="Registrar Sesion de Tutoria" onclick="window.location = 'index.php?action=registro_tutoria'" class="button tiny success" style="float: right;">
       </div>
         <div>
           <table width="100%">
             <thead>
               <td>Id</td>
-              <td>Alumno</td>
               <td>Tutor</td>
               <td>Fecha</td>
               <td>Hora</td>

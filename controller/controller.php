@@ -143,11 +143,9 @@ class MVC{
 		if(!empty($informacion)){
 			foreach ($informacion as $row => $item) {
         if(!empty($flag)){
-          $alumno = Crud::getRegModel($item['alumno'],"alumnos");
           $maestro = Crud::getRegModel($item['maestro'],"maestros");
           echo "<tr>";
           echo "<td>".$item['id']."</td>";
-          echo "<td>".$alumno['nombre']."</td>";
           echo "<td>".$maestro['nombre']."</td>";
           echo "<td>".$item['fecha']."</td>";
           echo "<td>".$item['hora']."</td>";
@@ -155,17 +153,17 @@ class MVC{
             echo "<td>".$item['tutoria_informacion']."</td>";
          echo "</tr>";
         }else if($item['maestro'] == $_SESSION['maestro_info']['numero_empleado']){
-          $alumno = Crud::getRegModel($item['alumno'],"alumnos");
         $maestro = Crud::getRegModel($item['maestro'],"maestros");
 				echo "<tr>";
 				echo "<td>".$item['id']."</td>";
-				echo "<td>".$alumno['nombre']."</td>";
 				echo "<td>".$maestro['nombre']."</td>";
 				echo "<td>".$item['fecha']."</td>";
         echo "<td>".$item['hora']."</td>";
         echo "<td>".$item['tipo_tutoria']."</td>";
           echo "<td>".$item['tutoria_informacion']."</td>";
-				echo "<td>"."<a href=index.php?action=borrar&tipo=sesion_tutoria&id=".$item['id']." class='button radius tiny warning' onclick='confirmar();'>Borrar</a></td>";
+				echo "<td>"."<a href=index.php?action=ver_detalles&id=".$item['id']." class='button radius tiny'>Ver detalles</a></td>";
+        
+          echo "<td>"."<a href=index.php?action=borrar&tipo=sesion_tutoria&id=".$item['id']." class='button radius tiny warning' onclick='confirmar();'>Borrar</a></td>";
         echo "</tr>";
         }
 				
@@ -232,13 +230,16 @@ class MVC{
   public function getSelectForMaestrosTutoria($numero_maestro){
 		$informacion = Crud::vistaXTablaModel("alumnos");
 		if(!empty($informacion)){
+        //$jsInfo =array();
 				foreach ($informacion as $row => $item) {
           if($item['tutor'] == $numero_maestro){
             $carrera_alumno = Crud::getRegModel($item['carrera'], "carreras");
             echo "<option value='".$item['matricula']."'>".$item['matricula']. " | ". $item['nombre'] . " | ".$carrera_alumno['nombre'] . "</option>";
+            //$jsInfo[] = ['matricula'=>$item['matricula'], 'nombre'=>$item['nombre'], 'carrera'=>$carrera_alumno['nombre']];
           }
-            
+         //echo json_encode($jsInfo);
 				}
+
 			}else{
         echo "<center><h3>No tiene asignado ningun alumno</h3></center>";
     }
@@ -281,23 +282,58 @@ class MVC{
 			}
 		}
 	}
-  
+  //funcion que registra una sesion de tutoria ya sea individual o grupal
   public function registroTutoriaController(){
+
 		if(isset($_POST['btn_agregar'])){
-      $fecha = date('Y-m-d', strtotime($_POST['fecha']));
-			$data = array('alumno'=> $_POST['alumno'],
-						'tipo'=> $_POST['tipo_tutoria'],
+      $fecha = date('Y-m-d', strtotime($_POST['fecha'])); //tomar del servidor la fecha
+      
+      
+      $i=0;
+      //contar el numero de alumnos para saber de que tipo es la tutoria
+      while(!empty($_POST["matricula".$i])){
+        $i++;
+      }
+      //verificar que tipo de tutoria fue
+      if($i > 1){
+        $tipo = "Grupal";
+      }else{
+        $tipo = "Individual";
+      }
+      //registrar tutoria
+      //lenado de datos
+       $data = array(
 						'fecha'=> $fecha,
              'hora'=> $_POST['hora'],
               'maestro'=> $_POST['maestro'],
               'info'=> $_POST['tutoria_informacion'],
+              'tipo'=> $tipo
 					);
-			$registro = Crud::registroTutoriaModel($data);
-			if($registro == "success"){
-				echo "<script>window.location='index.php?action=sesion_tutoria';</script>";
+      $registro = Crud::registroTutoriaModel($data);
+      if($registro == "success"){
+				//Tutoria registrada
+        //Se procede a obtener el id de la tutoria ingresada
+        $lastID = Crud::returnLastTutoria();
+        
+        //crear clase del modelo para posteriormente insertar
+        //Se procede a registrar cada alumno de la tutoria en la tabla tutoria_alumnos
+        //iterar para obtener los datos de las cajas de texto (obtener los alumnos)
+        for($j=0; $j < $i; $j++){
+          //guardar los datos en array
+          $alumno_data = array(
+						'matricula_alumno'=> $_POST["matricula".$j],
+             'id_tutoria'=> $lastID[0]
+					);
+          //registrar alumno en la bd
+          Crud::registroAlumnoTutoria($alumno_data);
+        }
+        //redireccionar al tutorias
+        echo "<script>window.location='index.php?action=sesion_tutoria';</script>";
+			
 			}else{
 				echo "<script>alert('Error al registrar la sesion de tutoria')</script>";
 			}
+      
 		}
 	}
 
@@ -405,6 +441,28 @@ class MVC{
 			echo "<script>window.location='index.php?action=carreras';</script>";
 		}
 	}
+  
+  public function getTutoriaController(){
+		$id = (isset($_GET['id'])) ? $_GET['id'] : "";
+		$peticion = Crud::vistaXTablaModel('tutoria_alumnos');
+    $tutoria = Crud::getRegModel($id, 'sesion_tutoria');
+    echo "<center><h3>Tutoria de tipo: ".$tutoria["tipo_tutoria"]."</h3></center";
+		if(!empty($peticion)){
+      foreach($peticion as $key => $item){
+        if($item["tutoria"]==$id){
+          $alumno = Crud::getRegModel($item["matricula"], "alumnos");
+          echo "<tr>";
+          echo "<td>".$tutoria['id']."</td>";
+          echo "<td>".$alumno['nombre']."</td>";
+          echo "</tr>";
+        }
+      }
+      
+
+		}else{
+			//echo "<script>window.location='index.php?action=sesion_tutoria';</script>";
+		}
+	}
 
 	public function actualizarAlumnoController(){
 		if(isset($_POST['btn_actualizar'])){
@@ -502,7 +560,6 @@ class MVC{
             <table id='dt' class='display' style='width:100%'>
             <thead>
               <td>Id</td>
-              <td>Alumno</td>
               <td>Tutor</td>
               <td>Fecha</td>
               <td>Hora</td>

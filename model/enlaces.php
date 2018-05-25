@@ -23,6 +23,8 @@ class Enlaces{
     }
     else if($enlace == "registro_carrera" || $enlace == "editar_carrera"){
 			$module = "view/carreras/$enlace.php";
+		}else if($enlace== "ver_detalles"){
+			$module = "view/tutorias/$enlace.php";
 		}
 		else{
 			$module = "view/inicio.php";

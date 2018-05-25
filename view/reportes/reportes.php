@@ -25,7 +25,7 @@
     <div class="row">
  
       <div>
-        <h3>Reportes</h3>
+        <h3>Reportes de sesiones de tutorias</h3>
         <table width="100%">
           <thead>
             <tr>
