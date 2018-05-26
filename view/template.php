@@ -9,8 +9,9 @@
 	<hr>
 	<section>
 	<?php
+  //se crea una instancia de la clase controlador
 	$controllerT = new MVC();
-
+  //se ejecuta el metodo enlaces paginas controler que en base al valor de la variable action tomada por el metodo post, se redirecciona a una pagina especificada
 	$controllerT->enlacePaginasController();
 	?>
 	</section>
@@ -28,6 +29,7 @@
   <link rel="stylesheet" href="view/assets/plugins/datatables/jquery.dataTables.min.css" />
   
   <script type="text/javascript">
+      //necesario para mostrar dataTables
           $(document).ready(function() {
               $('#dt').DataTable();
           });

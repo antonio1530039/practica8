@@ -1,5 +1,7 @@
 <?php
+  //se crea la instnaica de la clase controlador
   $controller_reportes = new MVC();
+  //se verifica que se haya iniciado sesion
   $controller_reportes->verificarLoginController();
 
 ?>
@@ -48,8 +50,11 @@
             </tr>
           </tbod>
         </table>
-        
-        <?php $controller_reportes->verReporteController(); ?>
+      
+        <?php 
+        //ejecucion del metodo que muestra el reporte
+        $controller_reportes->verReporteController(); 
+        ?>
         
 
       </div>

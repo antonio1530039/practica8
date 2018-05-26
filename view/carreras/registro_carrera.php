@@ -1,8 +1,9 @@
 <?php
+  //instancia de la clase controlador
   $controller_carreras = new MVC();
-
+  //se verifica que se haya iniciado sesion
   $controller_carreras->verificarLoginController();
-
+  //ejecucion del metodo registro de carrera
   $controller_carreras->registroCarreraController();
 
 ?>

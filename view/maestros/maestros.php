@@ -1,5 +1,7 @@
 <?php
+  //se crea la instancia de la clase controlador
   $controller_maestros = new MVC();
+  //se verifica que se haya iniciado sesion
   $controller_maestros->verificarLoginController();
 
 ?>
@@ -30,15 +32,19 @@
               <td></td>
             </thead>
             <tbody>
-              <?php $controller_maestros->getMaestrosController("");  ?>
+              <?php 
+              //se muestra el listado de maestros
+              $controller_maestros->getMaestrosController("");  
+              ?>
             </tbody>
           </table>
           
         </div>
       </div>
       <script>
+          //funcion de confirmacion de borrado de registro
         function confirmar(){
-          var x = confirm("Seguro que deseas borrrar el registro?");
+          var x = confirm("Seguro que deseas borrar el registro?");
           if(!x)
             event.preventDefault();
         }

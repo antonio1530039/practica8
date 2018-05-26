@@ -1,5 +1,7 @@
 <?php
+  //instancia de la clase controlador
   $controller_carreras = new MVC();
+  //se verifica que el usuario haya iniciado sesion
   $controller_carreras->verificarLoginController();
 
 ?>
@@ -30,13 +32,17 @@
               <td></td>
             </thead>
             <tbody>
-              <?php $controller_carreras->getCarrerasController();  ?>
+              <?php 
+              //se muestran el listado de carreras
+              $controller_carreras->getCarrerasController();  
+              ?>
             </tbody>
           </table>
           
         </div>
       </div>
       <script>
+        //funcion de confirmacion en caso de querer borrar un registro
         function confirmar(){
           var x = confirm("Seguro que deseas borrrar el registro?");
           if(!x)

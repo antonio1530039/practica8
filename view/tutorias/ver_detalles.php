@@ -1,6 +1,7 @@
 <?php
+  //instancia de la clase controlador
   $controller_tutorias = new MVC();
-  
+  //se verifica que se haya iniciado sesion
   $controller_tutorias->verificarLoginController();
 
 
@@ -26,6 +27,7 @@
         <div>
             
               <?php
+                //se muestra la informacion de la tutoria especificada
                   $controller_tutorias->getTutoriaController();
 
               ?>

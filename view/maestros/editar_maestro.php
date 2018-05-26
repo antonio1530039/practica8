@@ -1,8 +1,10 @@
 <?php
-  $controller_maestros = new MVC();
-  
-  $controller_maestros->verificarLoginController();
 
+  //instancia de la clase controlador
+  $controller_maestros = new MVC();
+  //se verifica que se haya iniciado sesion 
+  $controller_maestros->verificarLoginController();
+  //ejecucion del metodo para actualizar el maestro especificado
   $controller_maestros->actualizarMaestroController();
 
 ?>
@@ -29,6 +31,7 @@
       </div>
         <div>
               <?php
+                //se muestran los datos del maestro
                   $controller_maestros->getMaestroController();
 
               ?>
@@ -41,6 +44,7 @@
     </form>
   </body>
   <script>
+      //confirmacion de guardar cambios
         function confirmar(){
           var x = confirm("Seguro que deseas guardar los datos?");
           if(!x)

@@ -1,8 +1,9 @@
 <?php
+  //se crea la instancia del controlador
   $controller_maestros = new MVC();
-
+  //se verifica si se inicio sesion
   $controller_maestros->verificarLoginController();
-
+  //ejecucion del metodo registro del controlador
   $controller_maestros->registroMaestroController();
 
 ?>

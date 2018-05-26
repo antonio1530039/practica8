@@ -1,8 +1,10 @@
 <?php
+
+  //instancia de la clase controlador
   $controller_tutoria = new MVC();
-
+  //se verifica que se haya iniciado sesion
   $controller_tutoria->verificarLoginController();
-
+  //registro de tutoria
   $controller_tutoria->registroTutoriaController();
 
 ?>
@@ -29,10 +31,11 @@
       </div>
         <div>
             <p>
-              <label>Alumno</label>
+              <label>Seleccione el alumno(s) que desee agregar y de clic en Añadir alumno a sesion</label>
               <select name="alumno" required="" id="alumno" class="select2" >
                   <?php
                     if(isset($_SESSION['maestro_info'])){
+                      //se muestran los alumnos tutorados del tutor
                       $controller_tutoria->getSelectForMaestrosTutoria($_SESSION['maestro_info']['numero_empleado']);
 
                       }
@@ -40,10 +43,10 @@
                   ?>
               </select>
             </p>
-          <input type="button" value="Añadir alumno" class="button tiny warning" style="float: right;" onclick="addAlumno();">
+          <input type="button" value="Añadir alumno a sesion" class="button tiny warning" style="float: right;" onclick="addAlumno()">
           
           <div id="contenedor">
-            <table width="100%" id="alumnos">
+            <table width="100%" id="alumnos" style="background-color:orange">
               <thead>
                 <tr>
                   <td>Matriculas de alumnos en esta sesión de tutoría</td>
@@ -67,19 +70,15 @@
             <label>Tema(s) de tutoria</label>
             <textarea rows="4" cols="50" name="tutoria_informacion" requiered=""></textarea>
           </p>
-               <input type="submit" name="btn_agregar" value="Registrar" class="button tiny success" style="float: right;" onclick="verificarNumero();">
+               <input type="submit" name="btn_agregar" value="Registrar" class="button tiny success" style="float: right;" onclick="verificarNumero()">
         </div>
       </div>
     </div>
-    </form>
-  </body>
-<script>
+    <script type="text/javascript">
+      //script necesario para registrar varios alumnos a una sesion de tutoria
   var contador = 0;
   var alumnosEnLista = [];
   var tabla = document.getElementById("alumnos");
-  
-  //var alumnos_datos = <?php echo json_encode($jsInfo)?>; //obtener datos de los alumnos
-  //alert(""+alumnos_datos.length);
   
   //Funcion que verifica si un alumno existe en la lista de alumnos en tutoria
   function checkAlumno(al){
@@ -98,6 +97,7 @@
     if(select!=""){
       //verificar que el alumno añadido a la tabla no exista ya en esta
       if(!checkAlumno(select)){
+
         alumnosEnLista.push(select);
         //Crear los elementos para mostrar los datos en la tabla
         var tx_matricula = document.createElement("input");
@@ -126,4 +126,6 @@
   }
   
 </script>
+    </form>
+  </body>
   </html>

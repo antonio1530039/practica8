@@ -1,7 +1,11 @@
 <?php
+  //instancia de la clase controlador
   $controller_alumnos = new MVC();
+
+  //se verifica que se haya iniciado sesion
   
   $controller_alumnos->verificarLoginController();
+  //se ejecuta el metodo actualizarAlumnoController para actualizar el alumno seleccionado
 
   $controller_alumnos->actualizarAlumnoController();
 
@@ -27,6 +31,7 @@
       </div>
         <div>
               <?php
+                  //se muestran los datos del alumno en os controles
                   $controller_alumnos->getAlumnoController();
 
               ?>
@@ -39,6 +44,7 @@
     </form>
   </body>
   <script>
+      //funcion de confirmacion en caso de guardar los datos
         function confirmar(){
           var x = confirm("Seguro que deseas guardar los datos?");
           if(!x)

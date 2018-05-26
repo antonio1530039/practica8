@@ -1,8 +1,9 @@
 <?php
+  //instancia de la clase controlador
   $controller_carreras = new MVC();
-  
+    //se verifica si se inicio sesion
   $controller_carreras->verificarLoginController();
-
+  //ejecucion de la actualizacion de la carrera
   $controller_carreras->actualizarCarreraController();
 
 ?>
@@ -29,6 +30,7 @@
       </div>
         <div>
               <?php
+                //se muestran los datos de la carrera
                   $controller_carreras->getCarreraController();
 
               ?>
@@ -41,6 +43,7 @@
     </form>
   </body>
   <script>
+      //funcion de confirmacion de guardado
         function confirmar(){
           var x = confirm("Seguro que deseas guardar los datos?");
           if(!x)

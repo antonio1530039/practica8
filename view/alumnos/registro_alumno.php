@@ -1,8 +1,10 @@
 <?php
+
+  //instancia de la clase controlador
   $controller_alumnos = new MVC();
-
+  //verificar si el usuario inicio sesion antes
   $controller_alumnos->verificarLoginController();
-
+  //registro de alumno al presionar el boton de registrar
   $controller_alumnos->registroAlumnoController();
 
 ?>
@@ -40,6 +42,7 @@
               <label>Carrera</label>
               <select name="carrera" required="" class="select2">
                   <?php
+                    //se muestra el select de las carreras
                     $controller_alumnos->getSelectForCarreras("");
                   ?>
               </select>
@@ -48,13 +51,13 @@
               <label>Tutor</label>
               <select name="tutor" required="" class="form-control select2">
                   <?php
+                    //se muestra el select de los maestros
                     $controller_alumnos->getSelectForMaestros("");
                   ?>
               </select>
             </p>
                <input type="submit" name="btn_agregar" value="Registrar" class="button tiny success" style="float: right;">
             
-            <!--content !-->
         </div>
       </div>
     </div>

@@ -1,5 +1,7 @@
 <?php
+  //instancia de la clase controlador
   $inicio_controller = new MVC();
+  //metodo que verifica que el usuario haya iniciado sesion primero
   $inicio_controller->verificarLoginController();
 ?>
 <!doctype html>
@@ -16,7 +18,10 @@
         </div>
 
         <div>
-          <?php $inicio_controller->mostrarInicioController(); ?>
+          <?php 
+          //se muestra el mensaje de inicio
+          $inicio_controller->mostrarInicioController(); 
+          ?>
         </div>
       </div>
 

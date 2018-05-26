@@ -1,7 +1,8 @@
 <?php
-  require_once('model/crud.php');
-  require_once "controller/controller.php";
+
+  //instancia de la clase controlador
   $ingresarUsuario = new MVC();
+  //ejecucion del metodo ingresoUsuarioController para intentar iniciar sesion
   $ingresarUsuario->ingresoUsuarioController();
 ?>
 
@@ -11,8 +12,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-   <!-- <link rel="stylesheet" href="view/assets/css/foundation.css" />
-    <script src="view/assets/js/vendor/modernizr.js"></script> -->
   </head>
   <body>
     <?php
